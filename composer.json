@@ -1,0 +1,14 @@
+{
+    "name": "xinkon/xinkon",
+    "description": "x",
+    "type": "php",
+    "license": "xinkon",
+    "minimum-stability": "beta",
+    "require": {
+
+    },
+
+    "autoload": {
+        "psr-4": {"xinkon": "xinkon/"}
+    }
+}
