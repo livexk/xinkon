@@ -1,4 +1,5 @@
 function update(o) {
+    clean();
     var $type = document.getElementById('input_type').value;
     var $url = document.getElementById('url').value;
     var $parameter = document.getElementById('parameter').value;
@@ -79,7 +80,7 @@ function cache_handle($url, $parameter, $type) {
     };
     request.onsuccess = function (event) {
         db = event.target.result;
-        transaction = db.transaction("cache", 'readwrite');
+        var transaction = db.transaction("cache", 'readwrite');
         objectStore = transaction.objectStore("cache");
         if ($url == undefined || $url == '') {
             detail_data(objectStore);
@@ -99,7 +100,7 @@ function cache_handle($url, $parameter, $type) {
      * 负责查数据
      * @param db
      */
-    detail_data = function (objectStore) {
+    var detail_data = function (objectStore) {
         var request = objectStore.openCursor();//openCursor没有参数的时候，表示获得所有数据
         var sub = new Array;
         request.onsuccess = function (e) {//openCursor成功的时候回调该方法
@@ -116,13 +117,13 @@ function cache_handle($url, $parameter, $type) {
     /**
      * 添加数据
      */
-    add_data = function (objectStore) {
+    var add_data = function (objectStore) {
         var result = objectStore.put({type: $type, url: $url, parameter: $parameter});
         detail_data(objectStore);
         return true;
     };
 
-    get_data_index = function (objectStore) {
+    var get_data_index = function (objectStore) {
         var request = objectStore.openCursor();//openCursor没有参数的时候，表示获得所有数据
         var status = 1;
         request.onsuccess = function (e) {//openCursor成功的时候回调该方法

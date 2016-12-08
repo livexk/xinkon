@@ -40,6 +40,7 @@ class index extends view
             $return_data = $this->get_url($url);
         }
         $data = $this->exit_data($return_data);
+
         header("Content-type: text/json; charset=utf8");
         exit(json_encode($data));
     }
@@ -103,6 +104,12 @@ class index extends view
             }
             $data['body'] = $this->jsonFormat($data['body']);
         }
+
+        $preg = "/<script[\s\S]*?<\/script>/i";
+        $data['body'] = preg_replace($preg,"",$data['body']);
+        $preg = "/<style[\s\S]*?<\/style>/i";
+        $data['body'] = preg_replace($preg,"",$data['body']);
+
         return $data;
     }
 
@@ -117,6 +124,8 @@ class index extends view
         if (is_array($data)) {
             $data = json_encode($data);
         }
+
+
         // 将urlencode的内容进行urldecode
         $data = urldecode($data);
 
